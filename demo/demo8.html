@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>this.state</title>
+    <script src="../built/react.js"></script>
+    <script src="../built/react-dom.js"></script>
+    <script src="../built/browser.min.js"></script>
+</head>
+<body>
+<!--组件免不了要与用户交互，React的一大创新，就是将组件看成一个状态机-->
+<!--一开始有一个初始状态，然后用户互动，导致状态变化，从而触发重新渲染UI-->
+<div id="example"></div>
+<script type="text/babel">
+    var LinkButton = React.createClass({
+        getInitialState: function () {
+            return {linked: false};
+        },
+        handleClick: function (event) {
+            this.setState({linked: !this.state.linked});
+        },
+        render: function () {
+            var text = this.state.linked ? 'like' : 'haven\'t liked';
+            return (
+                <p onClick={this.handleClick}>
+                        You {text} this.click to toggle.
+                </p>
+            )
+        }
+    });
+//  上面代码是一个LinkButton组件，getInitalState方法用于定义初始化状态
+//  这个对象可以通过this.state属性读取。当用户点击组件，导致状态变化，
+//  this.setState方法就修改状态值， 每次修改以后，自动调用this.render方法
+//  再次渲染组件
+
+//  由于 this.props 和 this.state 都用于描述组件的特性，
+    // 可能会产生混淆。一个简单的区分方法是，
+    // this.props 表示那些一旦定义，就不再改变的特性，
+    // 而 this.state 是会随着用户互动而产生变化的特性。
+    ReactDOM.render(
+        <LinkButton/>,
+        document.getElementById('example')
+    )
+</script>
+</body>
+</html>
